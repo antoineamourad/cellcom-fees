@@ -120,10 +120,26 @@
   }
 
   /* Fee cards */
+  .cards-grid-wrapper {
+    max-height: 380px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    padding: 10px;
+    background: var(--bg-secondary);
+  }
+  .cards-grid-wrapper::-webkit-scrollbar { width: 6px; }
+  .cards-grid-wrapper::-webkit-scrollbar-track { background: transparent; }
+  .cards-grid-wrapper::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 3px; }
+  .scroll-hint {
+    text-align: center; font-size: 11px; color: var(--text-tertiary);
+    margin-bottom: 6px; letter-spacing: 0.3px;
+  }
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 12px; margin-bottom: 1.5rem;
+    gap: 10px;
   }
   .fee-card {
     background: var(--bg-primary);
@@ -253,7 +269,10 @@
     <button class="tab-btn" onclick="filterCat('misc')" data-en="Other" data-fr="Autre">Other</button>
   </div>
 
-  <div class="cards-grid" id="cardsGrid"></div>
+  <div class="cards-grid-wrapper">
+    <div class="scroll-hint">↕ Scroll to see all fees</div>
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
 
   <div class="rules-section" id="rulesSection"></div>
 
