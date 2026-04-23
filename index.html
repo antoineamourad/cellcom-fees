@@ -341,6 +341,7 @@ function setLang(l) {
   renderRules();
   qIdx = 0; score = 0; answered = false;
   renderQuiz();
+  sendHeight();
 }
 
 function filterCat(c) {
@@ -349,6 +350,7 @@ function filterCat(c) {
     b.classList.toggle('active', (c === 'all' && i === 0) || (b.getAttribute('onclick') || '').includes("'" + c + "'"))
   );
   renderCards();
+  sendHeight();
 }
 
 function filterCards() {
@@ -356,12 +358,14 @@ function filterCards() {
   document.querySelectorAll('.fee-card').forEach(card => {
     card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
   });
+  sendHeight();
 }
 
 function toggleCard(el) {
   const wasExpanded = el.classList.contains('expanded');
   document.querySelectorAll('.fee-card').forEach(c => c.classList.remove('expanded'));
   if (!wasExpanded) el.classList.add('expanded');
+  sendHeight();
 }
 
 function renderCards() {
@@ -379,6 +383,7 @@ function renderCards() {
       ).join('')}</div>
     </div>`;
   }).join('');
+  sendHeight();
 }
 
 function renderRules() {
@@ -388,6 +393,7 @@ function renderRules() {
     rules[lang].map((r, i) =>
       `<div class="rule-item"><div class="rule-num">${i + 1}</div><span>${r}</span></div>`
     ).join('');
+  sendHeight();
 }
 
 function renderQuiz() {
@@ -403,6 +409,7 @@ function renderQuiz() {
   document.getElementById('quizNext').className = 'quiz-next';
   document.getElementById('scoreFill').style.width = Math.round((score / data.length) * 100) + '%';
   answered = false;
+  sendHeight();
 }
 
 function checkAns(i) {
@@ -434,9 +441,24 @@ function checkAns(i) {
       : `Terminé! ${score}/${data.length} correct`;
     next.onclick = () => { qIdx = 0; score = 0; answered = false; renderQuiz(); next.onclick = nextQ; };
   }
+  sendHeight();
 }
 
 function nextQ() { qIdx++; renderQuiz(); }
+
+// ── Auto-resize: tell the parent iFrame our true height ──
+function sendHeight() {
+  const height = document.documentElement.scrollHeight;
+  window.parent.postMessage({ type: 'resize', height: height }, '*');
+}
+
+// Send height on load and whenever content changes
+window.addEventListener('load', sendHeight);
+window.addEventListener('resize', sendHeight);
+
+// MutationObserver watches for any DOM changes and resends height
+const observer = new MutationObserver(sendHeight);
+observer.observe(document.body, { childList: true, subtree: true, attributes: true });
 
 // Initialize
 renderCards();
