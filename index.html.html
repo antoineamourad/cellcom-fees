@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cellcom — Service Fee Guidelines Training Module</title>
+<style>
+  :root {
+    --cc-blue: #003A70;
+    --cc-blue-mid: #005EA6;
+    --cc-blue-light: #E8F1FA;
+    --cc-blue-text: #003A70;
+    --cc-blue-hover: #D0E3F5;
+    --cc-white: #FFFFFF;
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F5F4F7;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-tertiary: #999;
+    --border-light: rgba(0,0,0,0.1);
+    --border-mid: rgba(0,0,0,0.2);
+    --success-bg: #E1F5EE;
+    --success-text: #0F6E56;
+    --danger-bg: #FCEBEB;
+    --danger-text: #791F1F;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --cc-blue: #4DA3E8;
+      --cc-blue-mid: #3B8DD4;
+      --cc-blue-light: #0E2240;
+      --cc-blue-text: #7DC0F5;
+      --cc-blue-hover: #162D4A;
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #252525;
+      --text-primary: #e8e8e8;
+      --text-secondary: #a0a0a0;
+      --text-tertiary: #707070;
+      --border-light: rgba(255,255,255,0.1);
+      --border-mid: rgba(255,255,255,0.2);
+      --success-bg: #085041;
+      --success-text: #9FE1CB;
+      --danger-bg: #501313;
+      --danger-text: #F7C1C1;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+
+  /* Brand header */
+  .brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+    padding: 18px 24px;
+    background: var(--cc-blue);
+    border-radius: var(--radius-lg);
+  }
+  @media (prefers-color-scheme: dark) {
+    .brand-header { background: #0D1F36; border: 0.5px solid #1E3A5C; }
+  }
+  .brand-logo { font-size: 22px; font-weight: 600; color: #fff; letter-spacing: 1.5px; }
+  .brand-sub { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+  /* Top bar */
+  .top-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .lang-toggle { display: flex; border: 1px solid var(--border-mid); border-radius: var(--radius-md); overflow: hidden; }
+  .lang-btn {
+    padding: 7px 16px; font-size: 13px; font-weight: 500;
+    background: transparent; border: none; cursor: pointer;
+    color: var(--text-secondary); transition: all .15s;
+    font-family: inherit;
+  }
+  .lang-btn.active { background: var(--cc-blue); color: #fff; }
+  @media (prefers-color-scheme: dark) { .lang-btn.active { background: #1E3A5C; } }
+
+  .search-box { flex: 1; min-width: 180px; max-width: 340px; }
+  .search-box input {
+    width: 100%; padding: 8px 12px; font-size: 14px;
+    border: 1px solid var(--border-light); border-radius: var(--radius-md);
+    background: var(--bg-primary); color: var(--text-primary);
+    font-family: inherit; outline: none; transition: border .15s;
+  }
+  .search-box input:focus { border-color: var(--cc-blue-mid); }
+
+  /* System tip */
+  .sys-tip {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--cc-blue-light); color: var(--cc-blue-text);
+    padding: 10px 14px; border-radius: var(--radius-md);
+    font-size: 13px; margin-bottom: 1rem;
+    border-left: 3px solid var(--cc-blue-mid);
+  }
+  .cellsell-code { font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-weight: 600; }
+
+  /* Tabs */
+  .tab-row { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 7px 16px; font-size: 13px;
+    border: 1px solid var(--border-light); border-radius: var(--radius-md);
+    background: transparent; cursor: pointer; color: var(--text-secondary);
+    transition: all .15s; font-family: inherit; font-weight: 400;
+  }
+  .tab-btn.active {
+    background: var(--cc-blue-light); color: var(--cc-blue-text);
+    border-color: var(--cc-blue-mid); font-weight: 500;
+  }
+
+  /* Fee cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px; margin-bottom: 1.5rem;
+  }
+  .fee-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem; cursor: pointer;
+    transition: all .2s; position: relative;
+    overflow: hidden; border-top: 3px solid var(--cc-blue-mid);
+  }
+  .fee-card:hover { border-color: var(--cc-blue-mid); transform: translateY(-1px); }
+  .fee-card.expanded { grid-column: 1 / -1; border-top-color: var(--cc-blue); }
+  .fee-price { font-size: 24px; font-weight: 600; color: var(--cc-blue-text); margin-bottom: 4px; }
+  .fee-name { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .fee-tag {
+    display: inline-block; font-size: 11px; padding: 2px 10px;
+    border-radius: var(--radius-md); background: var(--cc-blue-light);
+    color: var(--cc-blue-text); margin-bottom: 8px; font-weight: 500;
+  }
+  .fee-details {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+    display: none; padding-top: 10px;
+    border-top: 1px solid var(--border-light); margin-top: 10px;
+  }
+  .fee-card.expanded .fee-details { display: block; }
+  .detail-item { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; }
+  .detail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cc-blue-mid); margin-top: 7px; flex-shrink: 0; }
+  .expand-hint { font-size: 11px; color: var(--text-tertiary); margin-top: 6px; }
+  .fee-card.expanded .expand-hint { display: none; }
+
+  /* Mandatory rules */
+  .rules-section {
+    background: var(--cc-blue); border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .rules-section { background: #0D1F36; border: 0.5px solid #1E3A5C; }
+  }
+  .rules-title { font-size: 15px; font-weight: 500; margin-bottom: 14px; color: rgba(255,255,255,0.9); }
+  .rule-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; font-size: 13px; line-height: 1.5;
+    color: rgba(255,255,255,0.8);
+  }
+  .rule-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+
+  /* Quiz */
+  .quiz-section {
+    margin-top: 1.5rem; background: var(--cc-blue-light);
+    border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+  }
+  .quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .quiz-title { font-size: 15px; font-weight: 500; color: var(--cc-blue-text); }
+  .quiz-progress { font-size: 12px; color: var(--text-secondary); }
+  .quiz-q { font-size: 14px; font-weight: 500; margin-bottom: 12px; line-height: 1.6; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    padding: 11px 14px; border: 1px solid var(--border-light);
+    border-radius: var(--radius-md); font-size: 13px; cursor: pointer;
+    transition: all .15s; background: var(--bg-primary);
+    text-align: left; font-family: inherit; color: var(--text-primary);
+  }
+  .quiz-opt:hover { border-color: var(--cc-blue-mid); background: var(--cc-blue-hover); }
+  .quiz-opt.correct { border-color: #1D9E75; background: var(--success-bg); color: var(--success-text); }
+  .quiz-opt.wrong { border-color: #E24B4A; background: var(--danger-bg); color: var(--danger-text); }
+  .quiz-feedback {
+    margin-top: 12px; font-size: 13px; line-height: 1.6;
+    padding: 10px 14px; border-radius: var(--radius-md); display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.pass { background: var(--success-bg); color: var(--success-text); }
+  .quiz-feedback.fail { background: var(--danger-bg); color: var(--danger-text); }
+  .quiz-next {
+    margin-top: 12px; display: none; padding: 8px 18px;
+    font-size: 13px; font-weight: 500; border: 1px solid var(--border-mid);
+    border-radius: var(--radius-md); background: transparent;
+    cursor: pointer; color: var(--text-primary); font-family: inherit;
+    transition: all .15s;
+  }
+  .quiz-next:hover { background: var(--cc-blue-hover); }
+  .quiz-next.show { display: inline-block; }
+  .score-bar { height: 6px; background: var(--bg-secondary); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+  .score-fill { height: 100%; background: var(--cc-blue-mid); border-radius: 3px; transition: width .4s; }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container { padding: 16px 12px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .top-bar { flex-direction: column; align-items: stretch; }
+    .search-box { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="brand-header">
+    <div>
+      <div class="brand-logo">CELLCOM</div>
+      <div class="brand-sub" data-en="Service fee guidelines — Training module" data-fr="Directives des frais de service — Module de formation">Service fee guidelines — Training module</div>
+    </div>
+  </div>
+
+  <div class="top-bar">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">English</button>
+      <button class="lang-btn" onclick="setLang('fr')">Français</button>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Search fees..." id="searchInput" oninput="filterCards()">
+    </div>
+  </div>
+
+  <div class="sys-tip">
+    <span data-en='Type <span class="cellsell-code">"servicefee"</span> in CellSell to view all available service fee options.' data-fr='Tapez <span class="cellsell-code">"servicefee"</span> dans CellSell pour voir toutes les options disponibles.'></span>
+  </div>
+
+  <div class="tab-row" id="tabRow">
+    <button class="tab-btn active" onclick="filterCat('all')" data-en="All fees" data-fr="Tous les frais">All fees</button>
+    <button class="tab-btn" onclick="filterCat('setup')" data-en="Setup" data-fr="Configuration">Setup</button>
+    <button class="tab-btn" onclick="filterCat('sim')" data-en="SIM" data-fr="SIM">SIM</button>
+    <button class="tab-btn" onclick="filterCat('tech')" data-en="Tech support" data-fr="Support tech">Tech support</button>
+    <button class="tab-btn" onclick="filterCat('acc')" data-en="Accessories" data-fr="Accessoires">Accessories</button>
+    <button class="tab-btn" onclick="filterCat('misc')" data-en="Other" data-fr="Autre">Other</button>
+  </div>
+
+  <div class="cards-grid" id="cardsGrid"></div>
+
+  <div class="rules-section" id="rulesSection"></div>
+
+  <div class="quiz-section" id="quizSection">
+    <div class="quiz-header">
+      <span class="quiz-title" data-en="Knowledge check" data-fr="Vérification des connaissances">Knowledge check</span>
+      <span class="quiz-progress" id="quizProg">1 / 6</span>
+    </div>
+    <div class="score-bar"><div class="score-fill" id="scoreFill" style="width:0%"></div></div>
+    <div style="margin-top:16px">
+      <div class="quiz-q" id="quizQ"></div>
+      <div class="quiz-opts" id="quizOpts"></div>
+      <div class="quiz-feedback" id="quizFb"></div>
+      <button class="quiz-next" id="quizNext" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let lang = 'en';
+let activeCat = 'all';
+
+const fees = [
+  { cat:'tech', price:130, en:{name:'Tailored device configuration',tag:'Premium service',details:['Full phone setup completed (data transfer: contacts, photos, apps, settings)','Cleaning phone viruses','Recovering lost, missing, or misplaced data','Apple ID / Google account setup']}, fr:{name:'Configuration complète de l\'appareil',tag:'Service premium',details:['Configuration complète (transfert: contacts, photos, applis, paramètres)','Nettoyage des virus','Récupération de données perdues ou manquantes','Configuration Apple ID / compte Google']} },
+  { cat:'setup', price:85, en:{name:'Prepaid setup',tag:'Prepaid',details:['Full prepaid onboarding completed','Account creation','Prepaid plan setup','Prepaid activation']}, fr:{name:'Configuration prépayée',tag:'Prépayé',details:['Configuration complète du service prépayé','Création du compte','Configuration du forfait prépayé','Activation du service']} },
+  { cat:'tech', price:50, en:{name:'Phone restore',tag:'Tech support',details:['Device factory reset for reuse','Backup restore (iCloud / Google)','Device restored after reset']}, fr:{name:'Restauration du téléphone',tag:'Support tech',details:['Réinitialisation pour réutilisation','Restauration à partir d\'une sauvegarde (iCloud / Google)','Appareil restauré après réinitialisation']} },
+  { cat:'tech', price:45, en:{name:'Bluetooth connectivity',tag:'Tech support',details:['Connecting phone to car or Bluetooth devices','Testing calls and audio','Troubleshooting Bluetooth issues']}, fr:{name:'Connectivité Bluetooth',tag:'Support tech',details:['Connexion à une voiture ou appareils Bluetooth','Test des appels et de l\'audio','Dépannage des problèmes Bluetooth']} },
+  { cat:'setup', price:40, en:{name:'Plan setup',tag:'Activation',details:['Any plan change performed:','New activation','Upgrade with plan change','Rate plan change on existing account']}, fr:{name:'Configuration du forfait',tag:'Activation',details:['Tout changement de forfait effectué :','Nouvelle activation','Mise à niveau avec changement de forfait','Modification de forfait existant']} },
+  { cat:'sim', price:40, en:{name:'eSIM / SIM change',tag:'SIM swap',details:['Full SIM swap procedure completed:','Emailing Prevention Assistance Team','Calling preventions','Standard SIM swap']}, fr:{name:'Changement eSIM / SIM',tag:'Remplacement SIM',details:['Procédure complète de remplacement SIM :','Communication avec l\'équipe de prévention','Résolution des blocages','Remplacement standard de la SIM']} },
+  { cat:'sim', price:20, en:{name:'New eSIM / SIM',tag:'New SIM',details:['New SIM/eSIM issued during:','BYOD','HUG (upgrade)','New activation']}, fr:{name:'Nouvelle eSIM / SIM',tag:'Nouvelle SIM',details:['Nouvelle SIM/eSIM fournie lors de :','BYOD','Mise à niveau (HUG)','Nouvelle activation']} },
+  { cat:'acc', price:15, en:{name:'Tempered glass replacement',tag:'Accessory',details:['Screen protector installed','Camera protector installed']}, fr:{name:'Installation protecteur écran',tag:'Accessoire',details:['Installation d\'un protecteur d\'écran','Installation d\'un protecteur de caméra']} },
+  { cat:'misc', price:4, en:{name:'Paper invoice',tag:'Admin',details:['Customer requests printed documents']}, fr:{name:'Facture papier',tag:'Admin',details:['Le client demande des documents imprimés']} },
+  { cat:'misc', price:3, en:{name:'Recyclable bag',tag:'Retail',details:['Customer requests a shopping bag']}, fr:{name:'Sac recyclable',tag:'Commerce',details:['Le client demande un sac']} },
+];
+
+const rules = {
+  en: [
+    'Always explain the service and price BEFORE performing it',
+    'Get clear customer consent before proceeding',
+    'Deliver the full value of the service — no shortcuts',
+    'Add notes in CellSell / invoice comments for every service fee'
+  ],
+  fr: [
+    'Toujours expliquer le service et le prix AVANT de procéder',
+    'Obtenir le consentement clair du client',
+    'Assurer la livraison complète du service — pas de raccourcis',
+    'Ajouter des notes dans CellSell / commentaires de facture'
+  ]
+};
+
+const quizData = {
+  en: [
+    { q:'A customer wants their new phone fully set up with data transfer. What do you charge?', opts:['$50','$85','$130','$40'], ans:2, fb:'Tailored device configuration is $130 — it covers the full setup including data transfer, virus cleaning, and account setup.' },
+    { q:'What must you ALWAYS do before performing any service?', opts:['Add notes in CellSell','Get the customer\'s phone number','Explain the service and price, then get consent','Check inventory'], ans:2, fb:'Rule #1 and #2: Always explain the service and price, then get clear customer consent BEFORE performing.' },
+    { q:'A customer needs a SIM swap. What is the fee?', opts:['$20','$40','$50','$15'], ans:1, fb:'SIM/eSIM change is $40. This includes the full procedure: emailing the Prevention Assistance Team, calling preventions, and completing the swap.' },
+    { q:'What keyword do you type in CellSell to see all service fee options?', opts:['fees','services','servicefee','billing'], ans:2, fb:'Type "servicefee" in CellSell to view all available service fee options.' },
+    { q:'A customer just bought a phone BYOD and needs a new SIM. What do you charge?', opts:['$40','$20','$15','Free'], ans:1, fb:'A NEW eSIM/SIM is $20. This applies to BYOD, HUG upgrades, and new activations. The $40 fee is for SIM changes/swaps only.' },
+    { q:'After completing a service, what is the final mandatory step?', opts:['Upsell accessories','Add notes in CellSell / invoice comments','Email the customer a receipt','Call your manager'], ans:1, fb:'Always add notes in CellSell or invoice comments documenting the service performed.' },
+  ],
+  fr: [
+    { q:'Un client veut une configuration complète avec transfert de données. Quel est le frais?', opts:['50 $','85 $','130 $','40 $'], ans:2, fb:'La configuration complète est 130 $ — cela inclut le transfert de données, nettoyage de virus et configuration de compte.' },
+    { q:'Que devez-vous TOUJOURS faire avant d\'effectuer un service?', opts:['Ajouter des notes dans CellSell','Obtenir le numéro du client','Expliquer le service et le prix, puis obtenir le consentement','Vérifier l\'inventaire'], ans:2, fb:'Règle #1 et #2 : Toujours expliquer le service et le prix, puis obtenir le consentement du client AVANT de procéder.' },
+    { q:'Un client a besoin d\'un remplacement de SIM. Quel est le frais?', opts:['20 $','40 $','50 $','15 $'], ans:1, fb:'Le changement eSIM/SIM est 40 $. Cela inclut la procédure complète avec l\'équipe de prévention.' },
+    { q:'Quel mot-clé tapez-vous dans CellSell pour voir les frais de service?', opts:['fees','services','servicefee','billing'], ans:2, fb:'Tapez "servicefee" dans CellSell pour voir toutes les options disponibles.' },
+    { q:'Un client BYOD a besoin d\'une nouvelle SIM. Quel est le frais?', opts:['40 $','20 $','15 $','Gratuit'], ans:1, fb:'Une NOUVELLE eSIM/SIM est 20 $. Cela s\'applique au BYOD, aux mises à niveau HUG et aux nouvelles activations.' },
+    { q:'Après avoir complété un service, quelle est l\'étape obligatoire finale?', opts:['Vendre des accessoires','Ajouter des notes dans CellSell / commentaires','Envoyer un reçu par courriel','Appeler votre gérant'], ans:1, fb:'Toujours ajouter des notes dans CellSell ou les commentaires de facture.' },
+  ]
+};
+
+let qIdx = 0, score = 0, answered = false;
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent.trim().toLowerCase().includes(l === 'en' ? 'eng' : 'fra'))
+  );
+  document.getElementById('searchInput').placeholder = l === 'en' ? 'Search fees...' : 'Rechercher...';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + l);
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.hasAttribute('data-' + l)) b.textContent = b.getAttribute('data-' + l);
+  });
+  renderCards();
+  renderRules();
+  qIdx = 0; score = 0; answered = false;
+  renderQuiz();
+}
+
+function filterCat(c) {
+  activeCat = c;
+  document.querySelectorAll('.tab-btn').forEach((b, i) =>
+    b.classList.toggle('active', (c === 'all' && i === 0) || (b.getAttribute('onclick') || '').includes("'" + c + "'"))
+  );
+  renderCards();
+}
+
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.fee-card').forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function toggleCard(el) {
+  const wasExpanded = el.classList.contains('expanded');
+  document.querySelectorAll('.fee-card').forEach(c => c.classList.remove('expanded'));
+  if (!wasExpanded) el.classList.add('expanded');
+}
+
+function renderCards() {
+  const grid = document.getElementById('cardsGrid');
+  const filtered = activeCat === 'all' ? fees : fees.filter(f => f.cat === activeCat);
+  grid.innerHTML = filtered.map(f => {
+    const d = f[lang];
+    return `<div class="fee-card" onclick="toggleCard(this)" data-cat="${f.cat}">
+      <div class="fee-price">$${f.price}</div>
+      <div class="fee-name">${d.name}</div>
+      <div class="fee-tag">${d.tag}</div>
+      <div class="expand-hint">${lang === 'en' ? 'Tap to expand' : 'Appuyez pour détails'}</div>
+      <div class="fee-details">${d.details.map(t =>
+        `<div class="detail-item"><div class="detail-dot"></div><span>${t}</span></div>`
+      ).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderRules() {
+  const sec = document.getElementById('rulesSection');
+  const title = lang === 'en' ? 'Mandatory rules — every transaction' : 'Règles obligatoires — chaque transaction';
+  sec.innerHTML = `<div class="rules-title">${title}</div>` +
+    rules[lang].map((r, i) =>
+      `<div class="rule-item"><div class="rule-num">${i + 1}</div><span>${r}</span></div>`
+    ).join('');
+}
+
+function renderQuiz() {
+  const data = quizData[lang];
+  const q = data[qIdx];
+  document.getElementById('quizProg').textContent = `${qIdx + 1} / ${data.length}`;
+  document.getElementById('quizQ').textContent = q.q;
+  document.getElementById('quizOpts').innerHTML = q.opts.map((o, i) =>
+    `<button class="quiz-opt" onclick="checkAns(${i})">${o}</button>`
+  ).join('');
+  document.getElementById('quizFb').className = 'quiz-feedback';
+  document.getElementById('quizFb').textContent = '';
+  document.getElementById('quizNext').className = 'quiz-next';
+  document.getElementById('scoreFill').style.width = Math.round((score / data.length) * 100) + '%';
+  answered = false;
+}
+
+function checkAns(i) {
+  if (answered) return;
+  answered = true;
+  const data = quizData[lang];
+  const q = data[qIdx];
+  const btns = document.querySelectorAll('.quiz-opt');
+  btns[q.ans].classList.add('correct');
+  const fb = document.getElementById('quizFb');
+  if (i === q.ans) {
+    score++;
+    fb.className = 'quiz-feedback show pass';
+    fb.textContent = (lang === 'en' ? 'Correct! ' : 'Correct! ') + q.fb;
+  } else {
+    btns[i].classList.add('wrong');
+    fb.className = 'quiz-feedback show fail';
+    fb.textContent = (lang === 'en' ? 'Not quite. ' : 'Pas tout à fait. ') + q.fb;
+  }
+  document.getElementById('scoreFill').style.width = Math.round((score / data.length) * 100) + '%';
+  const next = document.getElementById('quizNext');
+  if (qIdx < data.length - 1) {
+    next.className = 'quiz-next show';
+    next.textContent = lang === 'en' ? 'Next →' : 'Suivant →';
+  } else {
+    next.className = 'quiz-next show';
+    next.textContent = lang === 'en'
+      ? `Done! ${score}/${data.length} correct`
+      : `Terminé! ${score}/${data.length} correct`;
+    next.onclick = () => { qIdx = 0; score = 0; answered = false; renderQuiz(); next.onclick = nextQ; };
+  }
+}
+
+function nextQ() { qIdx++; renderQuiz(); }
+
+// Initialize
+renderCards();
+renderRules();
+renderQuiz();
+</script>
+</body>
+</html>
